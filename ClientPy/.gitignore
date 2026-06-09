@@ -1,0 +1,18 @@
+# Ambientes Virtuais (Pasta onde ficam o Flask e Requests)
+venv/
+ENV/
+env/
+
+# Arquivos temporários do Python (Compilados em cache)
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Configurações de IDEs (Opcional, caso use VS Code ou PyCharm)
+.vscode/
+.idea/

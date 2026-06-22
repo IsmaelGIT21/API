@@ -16,17 +16,35 @@
         <div id="alerta" class="alerta" style="display: none;"></div>
 
         <div class="campo">
-            <label for="produto">Produto:</label>
-            <input type="text" id="produto" placeholder="Ex: Teclado Mecânico">
+            <label for="cliente_nome">Nome do Cliente:</label>
+            <input type="text" id="cliente_nome" placeholder="Ex: Carlos Silva">
+        </div>
+
+        <div class="campo">
+            <label for="forma_pagamento">Forma de Pagamento:</label>
+            <select id="forma_pagamento">
+                <option value="Pix">Pix</option>
+                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                <option value="Cartão de Débito">Cartão de Débito</option>
+                <option value="Dinheiro">Dinheiro</option>
+            </select>
+        </div>
+
+        <!-- SELECT DINÂMICO DE PRODUTOS -->
+        <div class="campo">
+            <label for="produto_id">Produto Cadastrado:</label>
+            <select id="produto_id" onchange="atualizarPrecoUnitario()">
+                <option value="">Carregando produtos...</option>
+            </select>
         </div>
 
         <div class="campo">
             <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" min="1" placeholder="Ex: 2">
+            <input type="number" id="quantidade" min="1" value="1" placeholder="Ex: 2">
         </div>
 
         <div class="campo">
-            <label for="valor">Valor Unitário (R$):</label>
+            <label for="valor">Valor Unitário Praticado (R$):</label>
             <input type="number" step="0.01" id="valor" min="0.01" placeholder="Ex: 150.50">
         </div>
 

@@ -3,7 +3,6 @@ import requests
 API_URL = "http://127.0.0.1:8000/api/vendas"
 
 def enviar_para_api(nome, quantidade, valor):
-    # Mudamos 'nome' para 'produto' para bater com o banco do Laravel!
     dados = {
         "produto": nome,
         "quantidade": int(quantidade),
@@ -24,3 +23,22 @@ def enviar_para_api(nome, quantidade, valor):
         print(f"Não foi possível falar com a API: {e}", flush=True)
         print("-----------------------\n", flush=True)
         return False
+        
+def buscar_vendas():
+    try:
+        resposta = requests.get(API_URL, timeout=5)
+
+        print("\n--- GET VENDAS ---", flush=True)
+        print(f"Status: {resposta.status_code}", flush=True)
+        print(f"Resposta: {resposta.text}", flush=True)
+        print("------------------\n", flush=True)
+
+        if resposta.status_code == 200:
+            return resposta.json()
+        return []
+
+    except requests.exceptions.RequestException as e:
+        print("\n--- ERRO GET ---", flush=True)
+        print(e, flush=True)
+        print("----------------\n", flush=True)
+        return []

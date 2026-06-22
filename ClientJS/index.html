@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Venda</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Cadastro de Venda</h2>
+    <div class="container">
+        <h2>Cadastro de Venda</h2>
 
-    <div id="alerta" class="alerta" style="display: none;"></div>
+        <div id="alerta" class="alerta" style="display: none;"></div>
 
-    <div class="campo">
-        <label for="produto">Produto:</label>
-        <input type="text" id="produto" placeholder="Ex: Teclado Mecânico">
+        <div class="campo">
+            <label for="produto">Produto:</label>
+            <input type="text" id="produto" placeholder="Ex: Teclado Mecânico">
+        </div>
+
+        <div class="campo">
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" min="1" placeholder="Ex: 2">
+        </div>
+
+        <div class="campo">
+            <label for="valor">Valor Unitário (R$):</label>
+            <input type="number" step="0.01" id="valor" min="0.01" placeholder="Ex: 150.50">
+        </div>
+
+        <button onclick="cadastrarVenda()">Cadastrar Venda</button>
+
+        <hr>
+
+        <h3>Vendas cadastradas</h3>
+
+        <button onclick="carregarVendas()">Atualizar lista</button>
+
+        <ul id="listaVendas"></ul>
     </div>
 
-    <div class="campo">
-        <label for="quantidade">Quantidade:</label>
-        <input type="number" id="quantidade" min="1" placeholder="Ex: 2">
-    </div>
+    <script src="script.js"></script>
 
-    <div class="campo">
-        <label for="valor">Valor Unitário (R$):</label>
-        <input type="number" step="0.01" id="valor" min="0.01" placeholder="Ex: 150.50">
-    </div>
-
-    <button onclick="cadastrarVenda()">Cadastrar Venda</button>
-</div>
-
-<script src="script.js"></script>
 </body>
+
 </html>

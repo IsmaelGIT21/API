@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from api_client import enviar_para_api
-from api_client import enviar_para_api, buscar_vendas
+# Garanta que todas as três funções estão sendo importadas aqui
+from api_client import enviar_para_api, buscar_vendas, buscar_produtos
 
 app = Flask(__name__)
 app.secret_key = 'chave_secreta_aqui'
@@ -8,19 +8,25 @@ app.secret_key = 'chave_secreta_aqui'
 @app.route('/', methods=['GET'])
 def index():
     vendas = buscar_vendas()
-    return render_template('index.html', vendas=vendas)
+    produtos = buscar_produtos() # Puxa a lista do Laravel via api_client
+    
+    # 🚀 CORRIGIDO: Passando explicitamente a variável 'produtos' para o HTML
+    return render_template('index.html', vendas=vendas, produtos=produtos)
+
 @app.route('/enviar', methods=['POST'])
 def enviar():
-    nome = request.form.get('nome')
+    cliente_nome = request.form.get('cliente_nome')
+    forma_pagamento = request.form.get('forma_pagamento')
+    produto_id = request.form.get('produto_id')
     quantidade = request.form.get('quantidade')
     valor = request.form.get('valor')
 
-    sucesso = enviar_para_api(nome, quantidade, valor)
+    sucesso = enviar_para_api(cliente_nome, forma_pagamento, produto_id, quantidade, valor)
 
     if sucesso:
-        flash('Produto cadastrado com sucesso!', 'sucesso')
+        flash('Venda cadastrada com sucesso!', 'sucesso')
     else:
-        flash('Erro ao cadastrar produto na API.', 'erro')
+        flash('Erro ao cadastrar venda na API.', 'erro')
 
     return redirect(url_for('index'))
 

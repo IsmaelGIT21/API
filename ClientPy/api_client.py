@@ -1,44 +1,74 @@
 import requests
 
-API_URL = "http://127.0.0.1:8000/api/vendas"
+URL_API = "http://127.0.0.1:8000/api"
 
-def enviar_para_api(nome, quantidade, valor):
-    dados = {
-        "produto": nome,
-        "quantidade": int(quantidade),
-        "valor": float(valor)
+def enviar_para_api(cliente_nome, forma_pagamento, produto_id, quantidade, valor):
+    venda_payload = {
+        "cliente_nome": cliente_nome,
+        "forma_pagamento": forma_pagamento,
+        "produto_id": int(produto_id) if produto_id else 1,
+        "quantidade": int(quantidade) if quantidade else 1,
+        "valor": float(valor) if valor else 0.0
     }
+
     try:
-        resposta = requests.post(API_URL, json=dados, timeout=5)
-        
-        print("\n--- DIAGNÓSTICO DE ENVIO ---", flush=True)
-        print(f"Dados enviados: {dados}", flush=True)
-        print(f"Status retornado pela API: {resposta.status_code}", flush=True)
-        print(f"Resposta bruta da API: {resposta.text}", flush=True)
-        print("----------------------------\n", flush=True)
-        
-        return resposta.status_code in range(200, 300)
-    except requests.exceptions.RequestException as e:
-        print("\n--- ERRO DE CONEXÃO ---", flush=True)
-        print(f"Não foi possível falar com a API: {e}", flush=True)
-        print("-----------------------\n", flush=True)
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+
+        resposta = requests.post(
+            f"{URL_API}/vendas",
+            json=venda_payload,
+            headers=headers
+        )
+
+        print("POST STATUS:", resposta.status_code)
+        print("POST RESPOSTA:", resposta.text)
+
+        return resposta.status_code == 201
+
+    except Exception as e:
+        print(f"Erro no POST: {e}")
         return False
-        
+
 def buscar_vendas():
     try:
-        resposta = requests.get(API_URL, timeout=5)
+        headers = {'Accept': 'application/json'}
 
-        print("\n--- GET VENDAS ---", flush=True)
-        print(f"Status: {resposta.status_code}", flush=True)
-        print(f"Resposta: {resposta.text}", flush=True)
-        print("------------------\n", flush=True)
+        resposta = requests.get(
+            f"{URL_API}/vendas",
+            headers=headers
+        )
+
+        print("STATUS VENDAS:", resposta.status_code)
 
         if resposta.status_code == 200:
             return resposta.json()
+
         return []
 
-    except requests.exceptions.RequestException as e:
-        print("\n--- ERRO GET ---", flush=True)
-        print(e, flush=True)
-        print("----------------\n", flush=True)
+    except Exception as e:
+        print(f"Erro no GET Vendas: {e}")
+        return []
+
+def buscar_produtos():
+    try:
+        headers = {'Accept': 'application/json'}
+
+        resposta = requests.get(
+            f"{URL_API}/produtos",
+            headers=headers
+        )
+
+        print("STATUS PRODUTOS:", resposta.status_code)
+        print("RESPOSTA PRODUTOS:", resposta.text)
+
+        if resposta.status_code == 200:
+            return resposta.json()
+
+        return []
+
+    except Exception as e:
+        print(f"Erro no GET Produtos: {e}")
         return []

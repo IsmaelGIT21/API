@@ -32,12 +32,13 @@
             font-weight: bold;
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 14px;
         }
 
         button {
@@ -104,9 +105,32 @@
 
         <!-- FORMULÁRIO -->
         <form action="/enviar" method="POST">
+            <!-- CAMPO: NOME DO CLIENTE -->
             <div class="campo">
-                <label for="nome">Produto:</label>
-                <input type="text" id="nome" name="nome" required placeholder="Ex: Teclado Mecânico">
+                <label for="cliente_nome">Nome do Cliente:</label>
+                <input type="text" id="cliente_nome" name="cliente_nome" required placeholder="Ex: Carlos Silva">
+            </div>
+
+            <!-- CAMPO: FORMA DE PAGAMENTO -->
+            <div class="campo">
+                <label for="forma_pagamento">Forma de Pagamento:</label>
+                <select id="forma_pagamento" name="forma_pagamento" required>
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    <option value="Cartão de Débito">Cartão de Débito</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+            </div>
+
+            <!-- 🚀 NOVO CAMPO: SELECT DINÂMICO DE PRODUTOS VINDO DO LARAVEL -->
+            <div class="campo">
+                <label for="produto_id">Selecione o Produto:</label>
+                <select id="produto_id" name="produto_id" required>
+                    <option value="">Selecione um produto...</option>
+                    {% for produto in produtos %}
+                        <option value="{{ produto.id }}">{{ produto.nome }} (R$ {{ "%.2f"|format(produto.preco|float) }})</option>
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="campo">
@@ -115,7 +139,7 @@
             </div>
 
             <div class="campo">
-                <label for="valor">Valor (R$):</label>
+                <label for="valor">Valor Unitário Praticado (R$):</label>
                 <input type="number" id="valor" name="valor" step="0.01" min="0.01" required placeholder="Ex: 150.50">
             </div>
 
@@ -126,13 +150,13 @@
 
         <h3>Vendas cadastradas</h3>
 
-        <!-- LISTA DAS VENDAS -->
+        <!-- LISTA DAS VENDAS ATUALIZADA -->
         <ul>
             {% for venda in vendas %}
             <li>
-                <strong>{{ venda.produto }}</strong><br>
-                Quantidade: {{ venda.quantidade }}<br>
-                Valor: R$ {{ "%.2f"|format(venda.valor|float) }}
+                <strong>Cliente:</strong> {{ venda.cliente_nome }} | <strong>Pagamento:</strong> {{ venda.forma_pagamento }}<br>
+                <strong>Produto ID:</strong> #{{ venda.produto_id }}<br>
+                Quantidade: {{ venda.quantidade }} | Valor Unitário: R$ {{ "%.2f"|format(venda.valor|float) }}
             </li>
             {% else %}
             <li>Nenhuma venda cadastrada ainda.</li>

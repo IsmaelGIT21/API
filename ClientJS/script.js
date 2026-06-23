@@ -1,15 +1,11 @@
-// Descobre o IP da sua máquina e define a porta do Laravel
 const IP_ATUAL = window.location.hostname; 
 const PORTA_LARAVEL = window.location.port === "8000" ? "8080" : "8000";
 const API_URL = `http://${IP_ATUAL}:${PORTA_LARAVEL}/api`;
-
-// Executa automaticamente ao carregar a página
 window.onload = () => {
-    carregarProdutos(); // 🚀 Adicionado de volta para carregar seu select
+    carregarProdutos(); 
     carregarVendas();
 };
 
-// 1. CARREGAR PRODUTOS NO SELECT (GET)
 async function carregarProdutos() {
     try {
         const response = await fetch(`${API_URL}/produtos`);
@@ -27,7 +23,6 @@ async function carregarProdutos() {
     }
 }
 
-// 2. CADASTRAR VENDA (POST)
 async function cadastrarVenda() {
     const venda = {
         cliente_nome: document.getElementById('cliente_nome').value,
@@ -55,7 +50,6 @@ async function cadastrarVenda() {
     }
 }
 
-// 3. LISTAR VENDAS (GET)
 async function carregarVendas() {
     try {
         const response = await fetch(`${API_URL}/vendas`);

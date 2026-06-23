@@ -94,7 +94,6 @@
 
         <h2>Cadastrar Venda</h2>
 
-        <!-- ALERTAS FLASK -->
         {% with mensagens = get_flashed_messages(with_categories=true) %}
         {% if mensagens %}
         {% for category, message in mensagens %}
@@ -103,15 +102,12 @@
         {% endif %}
         {% endwith %}
 
-        <!-- FORMULÁRIO -->
         <form action="/enviar" method="POST">
-            <!-- CAMPO: NOME DO CLIENTE -->
             <div class="campo">
                 <label for="cliente_nome">Nome do Cliente:</label>
                 <input type="text" id="cliente_nome" name="cliente_nome" required placeholder="Ex: Carlos Silva">
             </div>
 
-            <!-- CAMPO: FORMA DE PAGAMENTO -->
             <div class="campo">
                 <label for="forma_pagamento">Forma de Pagamento:</label>
                 <select id="forma_pagamento" name="forma_pagamento" required>
@@ -122,7 +118,6 @@
                 </select>
             </div>
 
-            <!-- 🚀 NOVO CAMPO: SELECT DINÂMICO DE PRODUTOS VINDO DO LARAVEL -->
             <div class="campo">
                 <label for="produto_id">Selecione o Produto:</label>
                 <select id="produto_id" name="produto_id" required>
@@ -150,7 +145,6 @@
 
         <h3>Vendas cadastradas</h3>
 
-        <!-- LISTA DAS VENDAS ATUALIZADA -->
         <ul>
             {% for venda in vendas %}
             <li>

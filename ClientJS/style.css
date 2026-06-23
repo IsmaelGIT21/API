@@ -63,12 +63,10 @@ button {
     font-weight: bold;
 }
 
-/* Efeito de passar o mouse no botão */
 button:hover {
     background: #218838;
 }
 
-/* Classes prontas para alertas futuros via script.js */
 .alerta {
     padding: 10px;
     margin-bottom: 15px;

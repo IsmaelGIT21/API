@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-# Garanta que todas as três funções estão sendo importadas aqui
 from api_client import enviar_para_api, buscar_vendas, buscar_produtos
 
 app = Flask(__name__)
@@ -8,9 +7,7 @@ app.secret_key = 'chave_secreta_aqui'
 @app.route('/', methods=['GET'])
 def index():
     vendas = buscar_vendas()
-    produtos = buscar_produtos() # Puxa a lista do Laravel via api_client
-    
-    # 🚀 CORRIGIDO: Passando explicitamente a variável 'produtos' para o HTML
+    produtos = buscar_produtos() 
     return render_template('index.html', vendas=vendas, produtos=produtos)
 
 @app.route('/enviar', methods=['POST'])
